@@ -1,0 +1,71 @@
+dockerui:
+  image: dockerui/dockerui:latest
+  expose:
+    - 9000
+  ports:
+    - 9000:9000
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+
+apache:
+  build: apache
+  ports:
+    - 80:80
+  volumes:
+    - /container_data/apache/logs:/usr/local/apache2/logs
+
+webapp:
+  build: webapp
+  ports:
+    - 8090:8080
+  links:
+    - mysql:mysql
+  volumes:
+    - /container_data/webapp/logs:/opt/webapp/logs
+
+jboss:
+  build: jboss
+  ports:
+    - 8080:8080
+    - 8787:8787
+  links:
+    - mysql:mysql
+  volumes:
+    - /container_data/jboss/log:/opt/jboss/server/default/log
+
+mysql:
+  build: mysql
+  ports:
+    - 3306:3306
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: taskmanager
+    MYSQL_USER: user
+    MYSQL_PASSWORD: user
+  volumes:
+    - /container_data/mysql:/var/lib/mysql
+
+activemq:
+  image: webcenter/activemq:latest
+  ports:
+    - 8161:8161
+    - 61616:61616
+    - 61613:61613
+  environment:
+    ACTIVEMQ_NAME: amq
+    ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT: 'True'
+    ACTIVEMQ_ADMIN_LOGIN: admin
+    ACTIVEMQ_ADMIN_PASSWORD: admin
+  volumes:
+    - /container_data/activemq/data:/data/activemq
+    - /container_data/activemq/log:/var/log/activemq
+
+elasticsearch:
+  image: elasticsearch:latest
+  command: elasticsearch -Des.network.bind_host=0.0.0.0
+  ports:
+    - 9200:9200
+    - 9300:9300
+  volumes:
+    - /container_data/elasticsearch/config:/usr/share/elasticsearch/config
+    - /container_data/elasticsearch/data:/usr/share/elasticsearch/data
