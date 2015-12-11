@@ -19,7 +19,7 @@ apache:
 webapp:
   build: webapp
   ports:
-    - 8090:8080
+    - 8080:8090
   links:
     - mysql:mysql
   volumes:
@@ -27,9 +27,11 @@ webapp:
 
 jboss:
   build: jboss
-  ports:
-    - 8080:8080
-    - 8787:8787
+  expose:
+    - 8009
+# You can make JBoss visible from the Docker host if exposing the port 8080.
+#  ports:
+#    - 8080:8080
   links:
     - mysql:mysql
   volumes:

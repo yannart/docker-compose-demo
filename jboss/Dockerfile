@@ -42,4 +42,5 @@ RUN cd /tmp/task-viewer \
 CMD ["/opt/jboss/bin/run.sh", "-b", "0.0.0.0"]
 
 EXPOSE 8080
-EXPOSE 8787
+EXPOSE 8009
+

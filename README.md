@@ -56,12 +56,15 @@ The commands need to be executed from the Bash console included with Git.
   ```
 
 * Access to the web consoles (Be sure you added "docker.host" to your "hosts" file):
-  * JBoss Task Viewer: http://docker.host:8080/task-viewer
+  * JBoss:
+    * Management (if port 8080 is exposed): http://docker.host:8080
+    * Task Viewer (if port 8080 is exposed): http://docker.host:8080/task-viewer
   * Webapp Task Management: http://docker.host:8090/home
   * ActiveMQ: http://docker.host:8161/admin/
-  * JBoss management: http://docker.host:8080
-  * Apache: http://docker.host
-  * Elasticsearch
+  * Apache:
+    * Root: http://docker.host
+    * Task Viewer: http://docker.host/task-viewer
+  * Elasticsearch:
     * HTTP API: http://docker.host:9200
     * Kopf dashboard: http://docker.host:9200/_plugin/kopf/
   * Docker UI: http://docker.host:9000
