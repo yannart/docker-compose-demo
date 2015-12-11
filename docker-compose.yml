@@ -19,9 +19,10 @@ apache:
 webapp:
   build: webapp
   ports:
-    - 8080:8090
+    - 8090:8080
   links:
-    - mysql:mysql
+    - mysql
+    - activemq
   volumes:
     - /container_data/webapp/logs:/opt/webapp/logs
 
@@ -33,7 +34,8 @@ jboss:
 #  ports:
 #    - 8080:8080
   links:
-    - mysql:mysql
+    - mysql
+    - activemq
   volumes:
     - /container_data/jboss/log:/opt/jboss/server/default/log
 

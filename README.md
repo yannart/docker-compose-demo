@@ -39,7 +39,7 @@ The commands need to be executed from the Bash console included with Git.
 	
 * Execute the commands to share the folder:
   ```
-	docker-machine.exe ssh ggdocker 'sudo mkdir --parents //container_data'
+  docker-machine.exe ssh ggdocker 'sudo mkdir --parents //container_data'
   docker-machine.exe ssh ggdocker 'sudo mount -t vboxsf container_data //container_data'
   ```
 
