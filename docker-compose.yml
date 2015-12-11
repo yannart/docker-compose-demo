@@ -11,6 +11,8 @@ apache:
   build: apache
   ports:
     - 80:80
+  links:
+    - jboss:jboss
   volumes:
     - /container_data/apache/logs:/usr/local/apache2/logs
 
