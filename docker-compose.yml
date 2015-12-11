@@ -61,8 +61,7 @@ activemq:
     - /container_data/activemq/log:/var/log/activemq
 
 elasticsearch:
-  image: elasticsearch:latest
-  command: elasticsearch -Des.network.bind_host=0.0.0.0
+  build: elasticsearch
   ports:
     - 9200:9200
     - 9300:9300
