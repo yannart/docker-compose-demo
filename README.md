@@ -2,6 +2,7 @@
 
 This is an example of how Docker can be used to compose a complete environment.
 The containers used in this demo are:
+* **dockerui**: Container that exposes DOcker UI dashboard.
 * **apache**: Apache HTTPD
 * **jboss**: App "task-viewer" running on Jboss 5.1.0GA with Java 6. The image is based on Centos 6.7. The application is downloaded from "https://github.com/yannart/task-viewer.git" and compiled with Maven when the Docker image is built.
 * **webapp**: App "task-manager-app" running as an executable jar with an embedded Tomcat server on Java 8. The image is based on last version available of Centos 6.7. The application is downloaded from "https://github.com/yannart/task-manager-app.git" and compiled with Maven when the Docker image is built.
