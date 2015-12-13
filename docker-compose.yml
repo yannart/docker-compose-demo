@@ -23,6 +23,7 @@ webapp:
   links:
     - mysql
     - activemq
+    - elasticsearch
   volumes:
     - /container_data/webapp/logs:/opt/webapp/logs
 

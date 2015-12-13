@@ -1,5 +1,10 @@
 FROM centos:6.7
 
+ENV APP_NAME task-viewer
+
+# Maven version. 3.2.5 is last version compatible with Java 6, see https://maven.apache.org/docs/history.html)
+ENV MVN_VERSION 3.2.5
+
 # Install required packages
 RUN yum -y install git tar unzip wget 
 
@@ -19,21 +24,26 @@ RUN unzip jboss.zip \
 && chmod +x *.sh
 ENV JBOSS_HOME /opt/jboss
 
-# Install Maven 3.2.5 (Last version compatible with Java 6, see https://maven.apache.org/docs/history.html)
+# Install Maven
 RUN cd /tmp \
-&& wget http://www.eu.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz
+&& wget http://www.eu.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/apache-maven-${MVN_VERSION}-bin.tar.gz
 RUN cd /opt \
-&& tar -xzf /tmp/apache-maven-3.2.5-bin.tar.gz \
-&& mv apache-maven-3.2.5 maven \
+&& tar -xzf /tmp/apache-maven-${MVN_VERSION}-bin.tar.gz \
+&& mv apache-maven-${MVN_VERSION} maven \
 && ln -s /opt/maven/bin/mvn /usr/local/bin \
 && rm -rf /tmp/*
 ENV M2_HOME /opt/maven
 
 # Download the project and compile it
-RUN cd /tmp && git clone https://github.com/yannart/task-viewer.git
-RUN cd /tmp/task-viewer \
+# Hash of the commit, comment the line "git reset..." to use the last version:
+ENV APP_VERSION 1.0.0-SNAPSHOT
+ENV COMMIT_SHA1 61e7898713c32e4e30a88cfc014e03f27b0a7792
+
+RUN cd /tmp && git clone https://github.com/yannart/task-viewer.git \
+&& cd /tmp/task-viewer \
+&& git reset --hard ${COMMIT_SHA1} \
 && mvn clean package \
-&& mv /tmp/task-viewer/target/task-viewer-1.0.0-SNAPSHOT.war /opt/jboss/server/default/deploy/task-viewer.war
+&& mv /tmp/task-viewer/target/${APP_NAME}-${APP_VERSION}.war /opt/jboss/server/default/deploy/task-viewer.war
 
 # Copy files to deploy
 # COPY ./deploy/* /opt/jboss/server/default/deploy/
