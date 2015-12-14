@@ -51,8 +51,7 @@ ENV APP_BIN ${APP_NAME}-${APP_VERSION}.jar
 # Application installation folder
 ENV APP_HOME /opt/${APP_NAME}
 
-RUN cd /tmp \
-&& git clone ${APP_GIT_REPOSITORY} ${APP_NAME} \
+RUN git clone ${APP_GIT_REPOSITORY} /tmp/${APP_NAME} \
 && cd /tmp/${APP_NAME} \
 && git reset --hard ${APP_GIT_COMMIT} \
 && mvn clean package \
