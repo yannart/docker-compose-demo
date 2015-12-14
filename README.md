@@ -7,7 +7,7 @@ The containers used in this demo are:
 * **jboss**: App "task-viewer" running on Jboss 5.1.0GA with Java 6. The image is based on Centos 6.7. The application is downloaded from "https://github.com/yannart/task-viewer.git" and compiled with Maven when the Docker image is built.
 * **webapp**: App "task-manager-app" running as an executable jar with an embedded Tomcat server on Java 8. The image is based on last version available of Centos 6.7. The application is downloaded from "https://github.com/yannart/task-manager-app.git" and compiled with Maven when the Docker image is built.
 * **mysql**: MySQL server based on official Docker image, loads initial SQL script at first execution to prepare the schema required by the applications.
-* **elasticsearch**: Elasticsearch container using the last Elasticsearch official image.
+* **elasticsearch** and **elasticsearchbis**: Elasticsearch containers using the last Elasticsearch official image. The two containers are used to form an Elasticsearch cluster.
 * **activemq**: Last version available of webcenter/activemq Docker image.
 
 ### Install Docker Toolbox for Windows
@@ -65,8 +65,9 @@ The commands need to be executed from the Bash console included with Git.
     * Root: http://docker.host
     * Task Viewer: http://docker.host/task-viewer
   * Elasticsearch:
-    * HTTP API: http://docker.host:9200
-    * Kopf dashboard: http://docker.host:9200/_plugin/kopf/
+    * HTTP API: http://docker.host:9200 and http://docker.host:9201
+    * Kopf dashboard: http://docker.host:9200/_plugin/kopf/ and http://docker.host:9201/_plugin/kopf/
+	* Cluster nodes information: http://docker.host:9200/_nodes/http?pretty and http://docker.host:9201/_nodes/http?pretty
   * Docker UI: http://docker.host:9000
 
 * Other commands:
