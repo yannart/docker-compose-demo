@@ -1,20 +1,25 @@
-FROM centos
+FROM centos:7
 
-ENV APP_NAME task-manager
 
-ENV MVN_VERSION 3.3.9
+# Update OS and install required packages
+##########################################
+RUN yum -y update \
+&& yum -y install wget git \
+&& yum clean all
 
-# Install required packages
-RUN yum -y install wget git
 
-# Install Oracle JDK 8
+# Install JAVA Oracle JDK 8
+##########################################
 RUN wget --continue --no-check-certificate --header "Cookie: oraclelicense=a" -O jdk-linux-x64.rpm "http://download.oracle.com/otn-pub/java/jdk/8-b132/jdk-8-linux-x64.rpm" \
 && yum localinstall -y jdk-linux-x64.rpm \
 && rm jdk-linux-x64.rpm \
 && ln -s /usr/java/default/bin/java /usr/local/bin
 ENV JAVA_HOME /usr/java/default
 
+
 # Install Maven
+##########################################
+ENV MVN_VERSION 3.3.9
 RUN cd /tmp \
 && wget http://www.eu.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/apache-maven-${MVN_VERSION}-bin.tar.gz \
 && cd /opt \
@@ -24,24 +29,46 @@ RUN cd /tmp \
 && rm -rf /tmp/*
 ENV M2_HOME /opt/maven
 
-# Download the project and compile it
-# Hash of the commit, comment the line "git reset..." to use the last version:
+
+# Install application
+##########################################
+
+# Name of the application
+ENV APP_NAME task-manager
+
+# Version of the application
 ENV APP_VERSION 0.0.1-SNAPSHOT
-ENV COMMIT_SHA1 f5154298417e80547302e202e7b34eeb21234bc8
+
+# Git repository
+ENV APP_GIT_REPOSITORY https://github.com/yannart/task-manager-app.git
+
+# Git commit to compile
+ENV APP_GIT_COMMIT f5154298417e80547302e202e7b34eeb21234bc8
+
+# Binary name
+ENV APP_BIN ${APP_NAME}-${APP_VERSION}.jar
+
+# Application installation folder
+ENV APP_HOME /opt/${APP_NAME}
 
 RUN cd /tmp \
-&& git clone https://github.com/yannart/task-manager-app.git \
-&& cd /tmp/task-manager-app \
-&& git reset --hard ${COMMIT_SHA1} \
+&& git clone ${APP_GIT_REPOSITORY} ${APP_NAME} \
+&& cd /tmp/${APP_NAME} \
+&& git reset --hard ${APP_GIT_COMMIT} \
 && mvn clean package \
-&& mkdir -p /opt/webapp \
-&& mv /tmp/task-manager-app/target/${APP_NAME}-${APP_VERSION}.jar /opt/webapp/
+&& mkdir -p ${APP_HOME} \
+&& mv /tmp/${APP_NAME}/target/${APP_BIN} ${APP_HOME}/ \
+&& rm -rf /tmp/* \
+&& echo ${APP_NAME} > ${APP_HOME}/VERSION \
+&& echo ${APP_VERSION} >> ${APP_HOME}/VERSION \
+&& echo ${APP_GIT_COMMIT} >> ${APP_HOME}/VERSION
 
-# Copy files to deploy
-#COPY ./deploy/${APP_NAME}-${APP_VERSION}.jar /opt/webapp/
+# Copy files to deploy for local development
+#COPY ./deploy/* ${APP_HOME}/
 
-WORKDIR /opt/webapp/
+# Working directory
+WORKDIR ${APP_HOME}
 
-CMD ["java", "-jar", "task-manager-0.0.1-SNAPSHOT.jar"]
+CMD java -jar $APP_BIN
 
 EXPOSE 8080
