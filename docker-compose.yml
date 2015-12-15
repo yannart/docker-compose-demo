@@ -26,7 +26,7 @@ webapp:
     - elasticsearch
     - elasticsearchbis:elasticsearch2
   volumes:
-    - /container_data/webapp/logs:/opt/webapp/logs
+    - /container_data/webapp/logs:/opt/task-manager/logs
 
 jboss:
   build: jboss
