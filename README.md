@@ -23,8 +23,9 @@ Where DOCKER_HOST_IP is the IP of Docker VM.
 
 ### Create / start the Docker host VM
 
-The commands need to be executed from the Bash console included with Git.
+* Open the bash console included with Git and move to the project location.
 
+* Create the docker host virtual machine:
   ```
 	docker-machine create ggdocker --driver virtualbox
 	docker-machine stop ggdocker
@@ -49,10 +50,15 @@ The commands need to be executed from the Bash console included with Git.
   export DOCKER_HOST_IP=`docker-machine ip ggdocker`
   ```
 
+  It can be required, if asked, to regenerate the certificates used to communicate with docker daemon:
+  ```
+  docker-machine regenerate-certs ggdocker
+  ```
+
 ### Run the containers
 
   ```
-  docker-compose up activemq apache dockerui elasticsearch jboss mysql webapp
+  docker-compose up activemq apache dockerui elasticsearch elasticsearchbis jboss mysql webapp
   ```
 
 * Access to the web consoles (Be sure you added "docker.host" to your "hosts" file):
