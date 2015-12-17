@@ -25,14 +25,29 @@ Where DOCKER_HOST_IP is the IP of Docker VM.
 
 * Open the bash console included with Git and move to the project location.
 
-* Create the docker host virtual machine:
+* If you want to specify a specific location to store the Docker VM, use the environment variable MACHINE_STORAGE_PATH:
   ```
-	docker-machine create ggdocker --driver virtualbox
-	docker-machine stop ggdocker
+  export MACHINE_STORAGE_PATH=/path/to/vm
   ```
 
+* Create the docker host virtual machine:
+  ```
+  docker-machine create ggdocker --driver virtualbox --virtualbox-cpu-count "4" --virtualbox-memory "4096" --virtualbox-no-share
+  docker-machine stop ggdocker
+  ```
+
+ Where:
+  * **--virtualbox-cpu-count** number of CPUs for the machine (-1 to use the number of CPUs available)
+  * **--virtualbox-memory** size of memory for host in MB
+  * **--virtualbox-no-share** Disable the mount of your home directory
+  
+  Full options:
+  ```
+  docker-machine create --driver virtualbox --help
+  ```
+ 
+  
 * In VirtualBox, modify the ggdocker VM to:
-  * Increase the memory (tested with 4GB)
   * Setup a shared folder "container_data" checking the option "auto-mount". The selected folder in Windows will contain the data and logs of the containers.
 
 * Start the VM
