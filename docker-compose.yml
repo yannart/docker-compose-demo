@@ -74,7 +74,7 @@ elasticsearch:
     - 9200:9200
     - 9300:9300
   environment:
-    ES_JAVA_OPTS: -Des.node.name=elasticsearch -Des.network.host=${DOCKER_HOST_IP} -Des.transport.tcp.port=9300 -Des.http.port=9200 -Des.discovery.zen.ping.multicast.enabled=false -Des.discovery.zen.ping.unicast.hosts=${DOCKER_HOST_IP}:9301
+    ES_JAVA_OPTS: -Des.node.name=elasticsearch -Des.cluster.name=elasticsearch -Des.transport.tcp.port=9300 -Des.http.port=9200 -Des.discovery.zen.ping.multicast.enabled=false
   volumes:
     - /container_data/elasticsearch/data:/usr/share/elasticsearch/data
 
@@ -83,7 +83,10 @@ elasticsearchbis:
   ports:
     - 9201:9201
     - 9301:9301
+  links:
+    - elasticsearch:elasticsearch
   environment:
-    ES_JAVA_OPTS: -Des.node.name=elasticsearch_bis -Des.network.host=${DOCKER_HOST_IP} -Des.transport.tcp.port=9301 -Des.http.port=9201 -Des.discovery.zen.ping.multicast.enabled=false -Des.discovery.zen.ping.unicast.hosts=${DOCKER_HOST_IP}:9300
+    ES_JAVA_OPTS: -Des.node.name=elasticsearch_bis -Des.cluster.name=elasticsearch -Des.transport.tcp.port=9301 -Des.http.port=9201 -Des.discovery.zen.ping.multicast.enabled=false -Des.discovery.zen.ping.unicast.hosts=elasticsearch:9300
   volumes:
     - /container_data/elasticsearchbis/data:/usr/share/elasticsearch/data
+
