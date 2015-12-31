@@ -10,9 +10,10 @@ RUN yum -y update \
 
 # Install JAVA Oracle JDK 8
 ##########################################
-RUN wget --continue --no-check-certificate --header "Cookie: oraclelicense=a" -O jdk-linux-x64.rpm "http://download.oracle.com/otn-pub/java/jdk/8-b132/jdk-8-linux-x64.rpm" \
+RUN cd /tmp \
+&& wget --continue --no-check-certificate --header "Cookie: oraclelicense=a" -O jdk-linux-x64.rpm "http://download.oracle.com/otn-pub/java/jdk/8-b132/jdk-8-linux-x64.rpm" \
 && yum localinstall -y jdk-linux-x64.rpm \
-&& rm jdk-linux-x64.rpm \
+&& rm -rf /tmp/*
 && ln -s /usr/java/default/bin/java /usr/local/bin
 ENV JAVA_HOME /usr/java/default
 
