@@ -92,19 +92,19 @@ Where DOCKER_HOST_IP is the IP of Docker VM.
   ```
 
 * Access to the web consoles (Be sure you added "docker.host" to your "hosts" file):
-  * JBoss:
-    * Management (if port 8080 is exposed): http://docker.host:8080
-    * Task Viewer (if port 8080 is exposed): http://docker.host:8080/task-viewer
   * Webapp Task Management: http://docker.host:8090/home
   * ActiveMQ: http://docker.host:8161/admin/
   * Apache:
     * Root: http://docker.host
-    * Task Viewer: http://docker.host/task-viewer
+    * Task Viewer: http://docker.host/task-viewer/
   * Elasticsearch:
     * HTTP API: http://docker.host:9200 and http://docker.host:9201
     * Kopf dashboard: http://docker.host:9200/_plugin/kopf/ and http://docker.host:9201/_plugin/kopf/
 	* Cluster nodes information: http://docker.host:9200/_nodes/http?pretty and http://docker.host:9201/_nodes/http?pretty
   * Docker UI: http://docker.host:9000
+  * JBoss:
+    * Management (if port 8080 is exposed): http://docker.host:8080
+    * Task Viewer (if port 8080 is exposed): http://docker.host:8080/task-viewer
 
 * Other commands:
 To execute a bash inside an image:
