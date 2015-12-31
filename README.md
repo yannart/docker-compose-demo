@@ -10,7 +10,9 @@ The containers used in this demo are:
 * **elasticsearch** and **elasticsearchbis**: Elasticsearch containers using the last Elasticsearch official image. The two containers are used to form an Elasticsearch cluster.
 * **activemq**: Last version available of webcenter/activemq Docker image.
 
-### Install Docker Toolbox for Windows
+### Installation
+#### Windows
+##### Install Docker Toolbox
 Download and install Docker Toolbox (require >= 1.9.1c): https://www.docker.com/docker-toolbox
 
 Add these lines in "C:\Windows\System32\drivers\etc\hosts":
@@ -21,7 +23,7 @@ Add these lines in "C:\Windows\System32\drivers\etc\hosts":
 
 Where DOCKER_HOST_IP is the IP of Docker VM.
 
-### Create / start the Docker host VM
+##### Create / start the Docker host VM
 
 * Open the bash console included with Git and move to the project location.
 
@@ -70,10 +72,23 @@ Where DOCKER_HOST_IP is the IP of Docker VM.
   docker-machine regenerate-certs ggdocker
   ```
 
+#### Linux
+##### Install Docker & Docker compose
+Follow the installation instructions in https://docs.docker.com/engine/installation/ and https://docs.docker.com/compose/install/.
+
+Add these lines in "C:\Windows\System32\drivers\etc\hosts":
+  ```
+  DOCKER_HOST_IP mysql
+  DOCKER_HOST_IP docker.host
+  ```
+
+Where DOCKER_HOST_IP is the IP of Docker VM.
+
+
 ### Run the containers
 
   ```
-  docker-compose up activemq apache dockerui elasticsearch elasticsearchbis jboss mysql webapp
+  docker-compose up -d
   ```
 
 * Access to the web consoles (Be sure you added "docker.host" to your "hosts" file):
