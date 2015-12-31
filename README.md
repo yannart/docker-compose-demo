@@ -76,7 +76,7 @@ Where DOCKER_HOST_IP is the IP of Docker VM.
 ##### Install Docker & Docker compose
 Follow the installation instructions in https://docs.docker.com/engine/installation/ and https://docs.docker.com/compose/install/.
 
-Add these lines in "C:\Windows\System32\drivers\etc\hosts":
+Add these lines in "/etc/hosts":
   ```
   DOCKER_HOST_IP mysql
   DOCKER_HOST_IP docker.host
